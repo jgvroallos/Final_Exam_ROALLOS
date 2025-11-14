@@ -1,0 +1,5 @@
+apache_pkg:
+  debian: apache2
+  redhat: httpd
+
+motd_msg: "Ansible managed by roallos"

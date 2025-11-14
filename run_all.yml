@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Install Updates (CentOS, Ubuntu)
+    package:
+      update_cache: yes
+    changed_when: false
+
+- hosts: all
+  become: true
+  vars_files: config.yml
+  roles:
+    - apache

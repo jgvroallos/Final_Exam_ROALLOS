@@ -1,0 +1,26 @@
+---
+- name: Install Apache2 (Ubuntu)
+  apt:
+    name:
+      - "{{ apache_pkg.debian }}"
+  when: ansible_os_family == "Debian"
+
+- name: Install Apache2 (CentOS)
+  package:
+    name:
+      - "{{ apache_pkg.redhat }}"
+  when: ansible_os_family == "RedHat"
+
+- name: Enable/Start Apache2 (Ubuntu)
+  service:
+    name: "{{ apache_pkg.debian }}"
+    state: started
+    enabled: yes
+  when: ansible_os_family == "Debian"
+
+- name: Enable/Start Apache2 (CentOS)
+  service:
+    name: "{{ apache_pkg.redhat }}"
+    state: started
+    enabled: yes
+  when: ansible_os_family == "RedHat"
