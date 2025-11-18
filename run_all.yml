@@ -13,3 +13,15 @@
   vars_files: config.yml
   roles:
     - apache
+    - grafana
+
+- hosts: all
+  become: true
+  vars_files: config.yml
+  tasks:
+
+  - name: Set/Update MOTD (/etc/motd, CentOS/Ubuntu)
+    copy:
+      dest: /etc/motd
+      content: "{{ motd_msg }}"
+      mode: '0644'

@@ -2,4 +2,19 @@ apache_pkg:
   debian: apache2
   redhat: httpd
 
-motd_msg: "Ansible managed by roallos"
+grafana_pkg:
+  ubuntu_gpg: "https://packages.grafana.com/gpg.key"
+  ubuntu_repo: "deb https://packages.grafana.com/oss/deb stable main"
+  centos_gpg: "https://packages.grafana.com/gpg.key"
+  centos_repo: |
+      [grafana]
+      name=Grafana OSS
+      baseurl=https://packages.grafana.com/oss/rpm
+      repo_gpgcheck=0
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://packages.grafana.com/gpg.key
+      sslverify=1
+      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+
+motd_msg: Ansible Managed by {{ ansible_user }}

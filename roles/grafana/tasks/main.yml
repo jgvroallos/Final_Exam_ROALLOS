@@ -1,0 +1,36 @@
+---
+- name: Add Grafana GPG key (Ubuntu)
+  apt_key:
+    url: "{{ grafana_pkg.ubuntu_gpg }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add Grafana repository (Ubuntu)
+  apt_repository:
+    repo: "{{ grafana_pkg.ubuntu_repo }}"
+    state: present
+    filename: grafana
+  when: ansible_os_family == "Debian"
+
+- name: Update apt cache (Ubuntu)
+  apt:
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: Add Grafana repository file (CentOS)
+  copy:
+    dest: /etc/yum.repos.d/grafana.repo
+    content: "{{ grafana_pkg.centos_repo }}"
+    mode: '0644'
+  when: ansible_os_family == "RedHat"
+
+- name: Install Grafana (CentOS/Ubuntu)
+  package:
+    name: grafana
+    state: present
+
+- name: Start and enable Grafana service (CentOS/Ubuntu)
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: true
